@@ -6,15 +6,17 @@ public class Utilisateur {
 	   private String code;
 	   private String email;
 	   private String nom;
+	   private int codeZone;
 	
 	
-	   public Utilisateur(int id, String code, String email, String nom){
+	   public Utilisateur(int id, String code, String email, String nom, int codeZone){
 		   
 		   
 		   this.id = id;
 		   this.code = code;
 		   this.email = email;
 		   this.nom = nom;
+		   this.codeZone = codeZone;
 		   
 		   
 		   
@@ -26,12 +28,13 @@ public class Utilisateur {
 		   
 	   }
 	   
-	   public void creer(int id, String code, String email, String nom){
+	   public void creer(int id, String code, String email, String nom, int codeZone){
 		   
 		   this.id = id;
 		   this.code = code;
 		   this.email = email;
 		   this.nom = nom;
+		   this.codeZone = codeZone;
 		   
 		   
 	   }
@@ -50,6 +53,14 @@ public class Utilisateur {
 
 	    public String getCodeClient() {
 	        return code;
+	    }
+	    
+	    public int getCOdeZone(){
+	    	
+	    	
+	    	
+	    	return codeZone;
+	    	
 	    }
 	    
 	    

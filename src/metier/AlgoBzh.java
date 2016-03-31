@@ -8,6 +8,8 @@ package metier;
 import java.sql.Time;
 import java.util.Date;
 
+import controllers.ControlleurGlobal;
+
 import dao.UtilisateursDao;
 import dao.Db;
 import dao.VisitesDao;
@@ -26,52 +28,7 @@ public class AlgoBzh {
         // TODO code application logic here
         
         
-       String url = "jdbc:mysql://localhost:3306/newalb";
-       String user = "root";
-       String mdp = "password";
-        
-       Db db = new Db(url, user, mdp);
-       db.connexion();
-       
-       UtilisateursDao utilisateursDao = new UtilisateursDao(db);
-       VisitesDao visitesDao = new VisitesDao(db);
-       
-       Clients clients = utilisateursDao.selectClients();
-       
- 
-	
-	@SuppressWarnings("deprecation")
-	java.sql.Date date = (java.sql.Date) new java.sql.Date(2016, 4, 4);
-  
-	@SuppressWarnings("deprecation")
-	Time heure = new Time(17, 0, 0);
-	
-       
-       boolean res = visitesDao.insertVisite( date, heure, "rayon fruits et légumes", "M algue", 1);
-       System.out.println(res);
-       
-       clients.afficher();
-       
-       String identifiant = "CC00001";
-       String pwd = "test";
-       
-       Connexion connexion = new Connexion(identifiant, pwd, utilisateursDao);
-       
-       if (connexion.connecter()){
-    	   
-    	  
-    	  
-    	   connexion.getCommercial().afficher();
-    	   
-    	   
-    	   
-       } else {
-    	   
-    	   System.out.println("Erreur");
-    	   
-       }
-       
-       
+       ControlleurGlobal controlleurGlobal = new ControlleurGlobal();
        
        
        

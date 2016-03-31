@@ -1,5 +1,7 @@
 package gui;
 
+import javax.swing.JFrame;
+
 
 
 public class GuiMain {
@@ -10,8 +12,9 @@ public class GuiMain {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		Panel panel = new Panel();
-		Fenetre fenetre = new Fenetre(panel);
+		
+		ConnexionView connexionView = new ConnexionView();
+		Fenetre fenetre = new Fenetre(connexionView);
 		
 
 	}

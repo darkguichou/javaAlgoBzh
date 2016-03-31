@@ -27,7 +27,7 @@ public class UtilisateursDao {
 
 
 	
-	public Clients selectClients(){
+	public Clients selectClients(int zone){
 		
 		
 		Clients clients = new Clients();
@@ -35,7 +35,9 @@ public class UtilisateursDao {
 		
 		try {
 			
-			String query = "SELECT * FROM utilisateurs WHERE teleprospecteur = 0 AND commercial = 0";
+			String query = "SELECT * FROM utilisateurs, visites WHERE utilisateurs.codeZone =" + zone + " and utilisateurs.teleprospecteur = 0 and utilisateurs.commercial = 0 ORDER BY visites.dateVisite DESC";
+ 
+			//partir là dessus: SELECT * FROM utilisateurs, visites WHERE utilisateurs.codeZone = 35 and utilisateurs.teleprospecteur = 0 and utilisateurs.commercial = 0 
 			ResultSet res = db.exec(query);
 			
 			while (res.next()){
@@ -44,7 +46,8 @@ public class UtilisateursDao {
 				String code = res.getString("codeClient");
 				String email = res.getString("email");
 				String nom = res.getString("nom");
-				clients.getClients().add(new Client(id, code, email, nom));
+				int codeZone = res.getInt("codeZone");
+				clients.getClients().add(new Client(id, code, email, nom, codeZone));
 				
 				
 				
@@ -61,7 +64,7 @@ public class UtilisateursDao {
 		}
 		
 		
-		return clients;
+		return clients; 
 		
 		
 	}
@@ -83,7 +86,8 @@ public class UtilisateursDao {
 				String mdp = res.getString("motDePasse");
 				String email = res.getString("email");
 				String nom = res.getString("nom");
-				commercial.creer(id, code, email, nom);
+				int codeZone = res.getInt("codeZone");
+				commercial.creer(id, code, email, nom, codeZone);
 				
 				
 			}

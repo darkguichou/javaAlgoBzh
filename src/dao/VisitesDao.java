@@ -42,8 +42,8 @@ public class VisitesDao {
 				String lieu =  res.getString("lieuVisite");
 				String interlocuteur = res.getString("interlocuteur");
 				int idClient = res.getInt("idClient");
-				
-					
+
+
 				visites.getVisites().add(new Visite(id, date, time, lieu, interlocuteur, idClient));
 
 
@@ -67,15 +67,15 @@ public class VisitesDao {
 
 
 	}
-	
-	
+
+
 	public boolean insertVisite(Date dateVisite, Time heureVisite, String lieuVisite, String interlocuteur, int idClient)
 	{
-		
+
 		boolean res = false;
-		
+
 		try {
-			
+
 			String query = "INSERT INTO visites VALUES ( NULL, ?, ?, ?, ?, ?)";
 			PreparedStatement prepare = db.prepare(query);
 			prepare.setDate(1, dateVisite);
@@ -85,21 +85,21 @@ public class VisitesDao {
 			prepare.setInt(5, idClient);
 			prepare.execute();
 			res = true;
-			
-			
+
+
 		}catch (SQLException ex){
-			
-			
+
+
 			System.err.println(ex);
-			
+
 		}
-		
-		
-		
-		
+
+
+
+
 		return res;
-		
-		
+
+
 	}
 
 

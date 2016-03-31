@@ -14,7 +14,7 @@ public class Panel extends JPanel {
 	public Panel(){
 		
 		
-		JPanel panel = new JPanel();
+		super();
 		
 		
 		

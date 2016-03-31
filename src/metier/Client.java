@@ -8,8 +8,8 @@ package metier;
 
 public class Client extends Utilisateur{
 
-	public Client(int id, String code, String email, String nom) {
-		super(id, code, email, nom);
+	public Client(int id, String code, String email, String nom, int codeZone) {
+		super(id, code, email, nom, codeZone);
 		
 	}
 
