@@ -1,20 +1,22 @@
 package gui;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * Created by guillaume on 04/04/16.
  */
-public class ListeClientView extends JScrollPane {
+public class ListeClientView extends JPanel {
 
-
-    JButton bouton1;
-    JButton bouton2;
-    JMenuBar menu;
-    JTable table;
+    private JScrollPane tabPanel;
+    private JButton bouton1;
+    private JButton bouton2;
+    private JMenuBar menu;
+    private JTable table;
 
     public ListeClientView(){
 
+        this.tabPanel = new JScrollPane();
         this.menu = new JMenuBar();
         JLabel label = new JLabel("Salut");
         this.add(label);
@@ -29,9 +31,12 @@ public class ListeClientView extends JScrollPane {
 
     public void init(){
 
+        this.setLayout(new BorderLayout());
         menu.add(bouton1);
         menu.add(bouton2);
-        this.add(menu);
+        this.add(menu, BorderLayout.NORTH);
+        this.add(tabPanel, BorderLayout.CENTER);
+
 
 
 
@@ -40,5 +45,14 @@ public class ListeClientView extends JScrollPane {
 
     public JButton getBouton() {
         return bouton1;
+
+    }
+
+    public JScrollPane getTabPanel() {
+
+        return tabPanel;
     }
 }
+
+
+

@@ -3,13 +3,11 @@ package gui;
 import metier.Commercial;
 import metier.Connexion;
 import metier.ListeClients;
-import metier.Utilisateur;
-
-import java.awt.Dimension;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.*;
+import java.awt.*;
+import java.util.Observable;
+import java.util.Observer;
 
 public class Fenetre extends JFrame implements Observer{
 	
@@ -20,11 +18,11 @@ public class Fenetre extends JFrame implements Observer{
     Connexion connexion;
     ListeClients listeClients;
 	private JPanel connexionView;
-    private JScrollPane listeClientView;
+    private ListeClientView listeClientView;
     private Commercial commercial;
 	private static final long serialVersionUID = 1L;
 
-	public Fenetre(JPanel connexionView, JScrollPane listeClientView, Connexion connexion, ListeClients listeCliens){
+	public Fenetre(JPanel connexionView, ListeClientView listeClientView, Connexion connexion, ListeClients listeCliens){
 		
 
 
@@ -64,7 +62,7 @@ public class Fenetre extends JFrame implements Observer{
                 listeClients.create();
                 ListeClientTable table = new ListeClientTable(listeClients.getUtilisateurs());
                 table.create();
-                listeClientView.setViewportView(table.getTable());
+                listeClientView.getTabPanel().setViewportView(table.getTable());
                 this.getContentPane().add(listeClientView);
 
                 validate();
