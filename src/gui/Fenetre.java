@@ -83,7 +83,7 @@ public class Fenetre extends JFrame implements Observer{
 
         if (o instanceof ListeClients){
 
-            System.out.println("ta");
+            System.out.println("tab");
 
         }
 
