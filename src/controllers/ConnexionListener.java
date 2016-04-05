@@ -8,6 +8,7 @@ import java.awt.event.MouseListener;
 import dao.UtilisateursDao;
 
 import metier.Connexion;
+import metier.Utilisateur;
 
 public class ConnexionListener extends Controlleur implements MouseListener{
 	
@@ -15,12 +16,14 @@ public class ConnexionListener extends Controlleur implements MouseListener{
 	private Connexion connexion;
 	private ConnexionView vue;
 	private UtilisateursDao utilisateurDao;
-	
-    
-	public ConnexionListener(ConnexionView vue){
+	private Utilisateur utilisateur;
+
+
+
+    public ConnexionListener(ConnexionView vue, Connexion connexion){
 		
 		
-		
+		this.connexion = connexion;
 		this.vue = vue;
 	
 		
@@ -28,14 +31,23 @@ public class ConnexionListener extends Controlleur implements MouseListener{
 	}
 
 
-	@SuppressWarnings("deprecation")
+
 	@Override
 	public void mouseClicked(java.awt.event.MouseEvent e) {
 		
-		
-		
-		System.out.println("OK");
-		
+		connexion.init(vue.getIdField().getText().toString(), vue.getPwdField().getText().toString());
+		connexion.connecter();
+		if (connexion.getEtat()){
+
+			System.out.println("yo");
+		}
+
+		else{
+
+			System.out.println("po");
+
+		}
+
 		
 		//Connexion connexion = new Connexion();
 		

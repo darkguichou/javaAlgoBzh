@@ -62,9 +62,24 @@ public class Utilisateur {
 	    	return codeZone;
 	    	
 	    }
-	    
-	    
-	   
-	   
 
+	public int getCodeZone() {
+		return codeZone;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public String getNom() {
+		return nom;
+	}
 }

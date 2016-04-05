@@ -1,16 +1,12 @@
 package gui;
 
-import javafx.scene.control.PasswordField;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 
-import controllers.ConnexionListener;
+import javax.swing.*;
+import javax.swing.plaf.DimensionUIResource;
+import java.awt.*;
 
-public class ConnexionView extends Panel{
+public class ConnexionView extends Panel  {
 	
 	/**
 	 * 
@@ -19,22 +15,30 @@ public class ConnexionView extends Panel{
 	
 	private JTextField idField;
 	private JPasswordField pwdField;
+	private JButton bouton;
 
 	public ConnexionView(){
 		
 		
 		this.idField = new JTextField("id");
 		this.pwdField = new JPasswordField("pwd");
+		this.bouton = new JButton("se Connecter");
+
 		
+		
+		
+	}
+
+	public void init(){
+
+		idField.setColumns(10);
+		pwdField.setColumns(10);
+
 		this.add(new JLabel("Connexion:"));
 		this.add(idField);
 		this.add(pwdField);
-		JButton bouton = new JButton("se Connecter");
-		bouton.addMouseListener(new ConnexionListener(this));
 		this.add(bouton);
-		
-		
-		
+
 	}
 
 	public JTextField getIdField() {
@@ -44,9 +48,9 @@ public class ConnexionView extends Panel{
 	public JPasswordField getPwdField() {
 		return pwdField;
 	}
-	
-	
-	
-	
 
+
+	public JButton getBouton() {
+		return bouton;
+	}
 }

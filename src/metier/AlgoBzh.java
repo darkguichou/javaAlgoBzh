@@ -5,15 +5,6 @@
  */
 package metier;
 
-import java.sql.Time;
-import java.util.Date;
-
-import controllers.ControlleurGlobal;
-
-import dao.UtilisateursDao;
-import dao.Db;
-import dao.VisitesDao;
-
 
 /**
  *
@@ -27,8 +18,7 @@ public class AlgoBzh {
     public static void main(String[] args) {
         // TODO code application logic here
         
-        
-       ControlleurGlobal controlleurGlobal = new ControlleurGlobal();
+
        
        
        

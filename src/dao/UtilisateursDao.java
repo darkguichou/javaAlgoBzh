@@ -4,10 +4,7 @@ package dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import metier.Client;
-import metier.Clients;
-import metier.Commercial;
-import metier.Commerciaux;
+import metier.*;
 
 
 public class UtilisateursDao {
@@ -27,15 +24,15 @@ public class UtilisateursDao {
 
 
 	
-	public Clients selectClients(int zone){
-		
-		
-		Clients clients = new Clients();
+	public Utilisateurs selectClients(int zone){
+
+
+		Utilisateurs utilisateurs = new Utilisateurs();
 		
 		
 		try {
 			
-			String query = "SELECT * FROM utilisateurs, visites WHERE utilisateurs.codeZone =" + zone + " and utilisateurs.teleprospecteur = 0 and utilisateurs.commercial = 0 ORDER BY visites.dateVisite DESC";
+			String query = "SELECT * FROM utilisateurs, visites WHERE utilisateurs.codeZone =" + zone + " and utilisateurs.teleprospecteur = 0 and utilisateurs.commercial = 0   ORDER BY visites.dateVisite DESC";
  
 			//partir là dessus: SELECT * FROM utilisateurs, visites WHERE utilisateurs.codeZone = 35 and utilisateurs.teleprospecteur = 0 and utilisateurs.commercial = 0 
 			ResultSet res = db.exec(query);
@@ -47,7 +44,7 @@ public class UtilisateursDao {
 				String email = res.getString("email");
 				String nom = res.getString("nom");
 				int codeZone = res.getInt("codeZone");
-				clients.getClients().add(new Client(id, code, email, nom, codeZone));
+				utilisateurs.getClients().add(new Client(id, code, email, nom, codeZone));
 				
 				
 				
@@ -64,7 +61,7 @@ public class UtilisateursDao {
 		}
 		
 		
-		return clients; 
+		return utilisateurs;
 		
 		
 	}
