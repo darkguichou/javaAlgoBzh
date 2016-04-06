@@ -23,7 +23,7 @@ public class VisitesDao {
 
 	}
 
-	public Visites selectVisites(){ 
+	public Visites selectVisites(int zone){
 
 
 		Visites visites = new Visites();
@@ -31,22 +31,21 @@ public class VisitesDao {
 
 		try {
 
-			String query = "SELECT * FROM visites WHERE";
+			String query = "SELECT * FROM visites, utilisateurs, zones WHERE utilisateurs.codeZone =" + zone + " and visites.dateVisite > CURRENT_DATE and zones.codeZone = utilisateurs.codeZone";
 			ResultSet res = db.exec(query);
 
 			while (res.next()){
 
-				int id = res.getInt("idVisite");
-				Date date = res.getDate("dateVisite");
-				Time time = res.getTime("heureVisite");
-				String lieu =  res.getString("lieuVisite");
-				String interlocuteur = res.getString("interlocuteur");
-				int idClient = res.getInt("idClient");
+				int id = res.getInt("visites.idVisite");
+				Date date = res.getDate("visites.dateVisite");
+				Time time = res.getTime("visites.heureVisite");
+				String lieu =  res.getString("visites.lieuVisite");
+				String interlocuteur = res.getString("visites.interlocuteur");
+				int idClient = res.getInt("utilisateurs.idUtilisateur");
+				String nomZone = res.getString("zones.nomZone");
 
 
-				visites.getVisites().add(new Visite(id, date, time, lieu, interlocuteur, idClient));
-
-
+				visites.getVisites().add(new Visite(id, date, time, lieu, interlocuteur, idClient, nomZone));
 
 
 			}

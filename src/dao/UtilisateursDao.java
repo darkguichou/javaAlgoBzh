@@ -38,7 +38,6 @@ public class UtilisateursDao {
 			ResultSet res = db.exec(query);
 			
 			while (res.next()){
-				
 				int id = res.getInt("idUtilisateur");
 				String code = res.getString("codeClient");
 				String email = res.getString("email");
@@ -65,6 +64,7 @@ public class UtilisateursDao {
 		
 		
 	}
+
 	
 	
 	public Commercial selectCommercial(String code){

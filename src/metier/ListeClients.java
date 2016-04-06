@@ -45,7 +45,7 @@ public class ListeClients extends Observable{
 
         this.next = next;
         setChanged();
-        notifyObservers();
+        notifyObservers(this);
 
     }
 

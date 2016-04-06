@@ -12,16 +12,19 @@ public class Visite {
 	private String lieu;
 	private String interlocuteur;
 	private int  idClient;
+	private String zone;
 	
 	
-	public Visite (int id, Date date, Time heure, String lieu, String interlocuteur, int idClient){
+	public Visite (int id, Date date, Time heure, String lieu, String interlocuteur, int idClient, String zone){
 		
 		
 		this.id = id;
 		this.date = date;
 		this.lieu = lieu;
+		this.heure = heure;
 		this.interlocuteur = interlocuteur;
 		this.idClient = idClient;
+		this.zone = zone;
 		
 		
 		
@@ -54,4 +57,31 @@ public class Visite {
 		
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public int getIdClient() {
+		return idClient;
+	}
+
+	public String getInterlocuteur() {
+		return interlocuteur;
+	}
+
+	public String getLieu() {
+		return lieu;
+	}
+
+	public String getZone() {
+		return zone;
+	}
+
+	public Time getHeure() {
+		return heure;
+	}
 }

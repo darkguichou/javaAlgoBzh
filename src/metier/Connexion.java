@@ -70,7 +70,7 @@ public class Connexion extends Observable{
 	public void setEtat(boolean etat) {
 		this.etat = etat;
 		setChanged();
-		notifyObservers();
+		notifyObservers(this);
 
 	}
 

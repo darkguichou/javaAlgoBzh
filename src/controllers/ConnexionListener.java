@@ -37,19 +37,8 @@ public class ConnexionListener extends Controlleur implements MouseListener{
 		
 		connexion.init(vue.getIdField().getText().toString(), vue.getPwdField().getText().toString());
 		connexion.connecter();
-		if (connexion.getEtat()){
 
-			System.out.println("yo");
-		}
 
-		else{
-
-			System.out.println("po");
-
-		}
-
-		
-		//Connexion connexion = new Connexion();
 		
 	}
 
