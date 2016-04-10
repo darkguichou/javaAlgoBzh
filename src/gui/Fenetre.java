@@ -1,6 +1,7 @@
 package gui;
 
 import controllers.MenuListener;
+import dao.UtilisateursDao;
 import metier.Commercial;
 import metier.Connexion;
 import metier.ListeClients;
@@ -24,10 +25,11 @@ public class Fenetre extends JFrame implements Observer{
     private JPanel connexionView;
     private ListeClientView listeClientView;
     private ListeVisitesView listeVisitesView;
+    private AjouterRdvView ajouterRdvView;
     private Commercial commercial;
     private static final long serialVersionUID = 1L;
 
-    public Fenetre( MenuListener menuListener,JPanel connexionView, ListeClientView listeClientView, ListeVisitesView listeVisitesView, Connexion connexion, ListeClients listeCliens, ListeVisites listeVisites){
+    public Fenetre( MenuListener menuListener,JPanel connexionView, ListeClientView listeClientView, ListeVisitesView listeVisitesView, AjouterRdvView ajouterRdvView , Connexion connexion, ListeClients listeCliens, ListeVisites listeVisites){
 
 
 
@@ -45,6 +47,7 @@ public class Fenetre extends JFrame implements Observer{
         this.connexionView = connexionView;
         this.listeClientView = listeClientView;
         this.listeVisitesView = listeVisitesView;
+        this.ajouterRdvView = ajouterRdvView;
         this.getContentPane().add(this.connexionView);
 
 
@@ -131,6 +134,22 @@ public class Fenetre extends JFrame implements Observer{
 
             }
 
+            else if (arg.equals(ajouterRdvView)){
+
+                System.out.println("salut");
+                this.getContentPane().removeAll();
+                ajouterRdvView.setUtilisateurs(ajouterRdvView.getUtilisateursDao().selectClients(commercial.getCodeZone()).toCodeArray());
+                ajouterRdvView.getChoixClient().setModel(new DefaultComboBoxModel(ajouterRdvView.getUtilisateurs()));
+                ajouterRdvView.revalidate();
+                ajouterRdvView.repaint();
+
+                //faut ajouter les machins en attributs
+
+                this.getContentPane().add(ajouterRdvView);
+                validate();
+
+
+            }
         }
 
     }

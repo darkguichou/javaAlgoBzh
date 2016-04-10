@@ -1,7 +1,6 @@
 package gui;
 
 import controllers.ConnexionListener;
-import controllers.ListeCLientsListener;
 import controllers.MenuListener;
 import dao.Db;
 import dao.UtilisateursDao;
@@ -9,10 +8,6 @@ import dao.VisitesDao;
 import metier.Connexion;
 import metier.ListeClients;
 import metier.ListeVisites;
-import org.omg.CORBA.portable.ValueInputStream;
-
-import javax.rmi.CORBA.Util;
-import javax.swing.JFrame;
 
 
 
@@ -43,16 +38,19 @@ public class GuiMain {
 		ConnexionView connexionView = new ConnexionView();
         ListeClientView listeClientView = new ListeClientView();
         ListeVisitesView listeVisitesView = new ListeVisitesView();
+        AjouterRdvView ajouterRdvView = new AjouterRdvView(utilisateursDao);
+
+
 
         //Instanciation des Listeners
         ConnexionListener connexionListener = new ConnexionListener(connexionView, connexion);
-        ListeCLientsListener listeCLientsListener = new ListeCLientsListener(listeClients,listeClientView);
-        MenuListener menuListener = new MenuListener(listeClientView, connexionView, listeVisitesView);
+        MenuListener menuListener = new MenuListener(listeClientView, connexionView, listeVisitesView, ajouterRdvView);
 
         //Mise en place des listeners
+        connexionView.getBouton().addMouseListener(connexionListener);
         listeClientView.getMenu().setListeners(menuListener);
         listeVisitesView.getMenu().setListeners(menuListener);
-        connexionView.getBouton().addMouseListener(connexionListener);
+        ajouterRdvView.getMenu().setListeners(menuListener);
 
         //Initialisation des Vues
         listeClientView.init();
@@ -60,7 +58,7 @@ public class GuiMain {
         listeVisitesView.init();
 
         //Création de la fenètre
-		Fenetre fenetre = new Fenetre(menuListener, connexionView,listeClientView, listeVisitesView, connexion, listeClients, listeVisites);
+		Fenetre fenetre = new Fenetre(menuListener, connexionView,listeClientView, listeVisitesView, ajouterRdvView, connexion, listeClients, listeVisites);
 		
 
 	}

@@ -15,7 +15,8 @@ public class ListeClientView extends JPanel {
     public ListeClientView(){
 
         this.tabPanel = new JScrollPane();
-        menu =  new Toolbar();
+        this.menu = new Toolbar();
+
 
 
 
@@ -27,26 +28,24 @@ public class ListeClientView extends JPanel {
 
         this.setLayout(new BorderLayout());
         JPanel menuPanel = new JPanel();
-        menuPanel.setLayout(new GridLayout(2,1));
-
-        menuPanel.add(new JLabel("Menu:"));
-        menuPanel.add(menu);
+        menuPanel.add(this.menu);
+        System.out.println("c fait");
         this.add(menuPanel, BorderLayout.NORTH);
         this.add(tabPanel, BorderLayout.CENTER);
 
 
 
-
     }
 
 
-    public Toolbar getMenu() {
-        return menu;
-    }
 
     public JScrollPane getTabPanel() {
 
         return tabPanel;
+    }
+
+    public Toolbar getMenu() {
+        return menu;
     }
 }
 

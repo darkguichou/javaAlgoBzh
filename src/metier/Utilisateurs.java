@@ -1,5 +1,6 @@
 package metier;
 
+import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
@@ -36,11 +37,30 @@ public class Utilisateurs {
             
             
         }
+
+
         
         
    
         
         
+    }
+
+    public String[] toCodeArray(){
+
+        int i;
+        String[] codes = new String[utilisateurs.size()];
+
+        for (i = 0; i < utilisateurs.size(); i++){
+
+
+            codes[i] = utilisateurs.get(i).getCodeClient();
+
+
+        }
+
+
+        return codes;
     }
 
 

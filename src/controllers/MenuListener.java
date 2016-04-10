@@ -1,8 +1,6 @@
 package controllers;
 
-import gui.ConnexionView;
-import gui.ListeClientView;
-import gui.ListeVisitesView;
+import gui.*;
 import metier.Connexion;
 import metier.ListeVisites;
 
@@ -19,27 +17,30 @@ public class MenuListener extends Observable implements MouseListener {
     private ListeClientView listeClientView;
     private ConnexionView connexionView;
     private ListeVisitesView listeVisitesView;
+    private AjouterRdvView ajouterRdvView;
 
-    public MenuListener(ListeClientView listeClientView, ConnexionView connexionView, ListeVisitesView listeVisitesView){
+
+
+    public MenuListener(ListeClientView listeClientView, ConnexionView connexionView, ListeVisitesView listeVisitesView, AjouterRdvView ajouterRdvView){
 
 
         this.listeClientView = listeClientView;
         this.connexionView = connexionView;
         this.listeVisitesView = listeVisitesView;
-
+        this.ajouterRdvView = ajouterRdvView;
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
 
-        if (e.getSource().equals(listeClientView.getMenu().getListeCilentsB())){
+        if (e.getSource().equals(listeClientView.getMenu().getListeCilentsB()) || e.getSource().equals(listeVisitesView.getMenu().getListeCilentsB()) || e.getSource().equals(ajouterRdvView.getMenu().getListeCilentsB())){
 
             setChanged();
             notifyObservers(listeClientView);
             System.out.println("liste Clients");
         }
 
-        else if (e.getSource().equals(listeClientView.getMenu().getListeVisitesB())){
+        else if (e.getSource().equals(listeClientView.getMenu().getListeVisitesB()) || e.getSource().equals(listeVisitesView.getMenu().getListeVisitesB()) || e.getSource().equals(ajouterRdvView.getMenu().getListeVisitesB())){
 
 
             setChanged();
@@ -49,10 +50,10 @@ public class MenuListener extends Observable implements MouseListener {
         }
 
 
-        else if (e.getSource().equals(listeClientView.getMenu().getSavedRdV())){
+        else if (e.getSource().equals(listeClientView.getMenu().getSavedRdV()) || e.getSource().equals(listeVisitesView.getMenu().getSavedRdV()) || e.getSource().equals(ajouterRdvView.getMenu().getSavedRdV())){
 
             setChanged();
-            notifyObservers(this);
+            notifyObservers(ajouterRdvView);
             System.out.println("Enregistrer un rendez vous");
 
         }

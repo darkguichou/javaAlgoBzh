@@ -1,6 +1,7 @@
 package gui;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseListener;
 import java.security.PublicKey;
 
@@ -9,7 +10,6 @@ import java.security.PublicKey;
  *
  */
 public class Toolbar extends JToolBar{
-
 
     private JButton listeCilentsB;
     private JButton listeVisitesB;
@@ -21,10 +21,13 @@ public class Toolbar extends JToolBar{
         listeCilentsB = new JButton("Liste des clients");
         listeVisitesB = new JButton("Liste des visites");
         savedRdV = new JButton("Enregistrer un RDV");
-
+        this.addSeparator();
         this.add(listeCilentsB);
+        this.addSeparator(new Dimension(100, this.getHeight()));
         this.add(listeVisitesB);
+        this.addSeparator(new Dimension(100, this.getHeight()));
         this.add(savedRdV);
+        this.setFloatable(false);
 
 
     }

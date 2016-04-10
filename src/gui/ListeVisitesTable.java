@@ -35,4 +35,6 @@ public class ListeVisitesTable {
     public JTable getTable() {
         return table;
     }
+
+
 }

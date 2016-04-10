@@ -16,7 +16,7 @@ public class ListeVisitesView extends JPanel{
     public ListeVisitesView(){
 
         tabPan = new JScrollPane();
-        menu = new Toolbar();
+        this.menu = new Toolbar();
 
 
 
@@ -26,9 +26,7 @@ public class ListeVisitesView extends JPanel{
 
         this.setLayout(new BorderLayout());
         JPanel menuPanel = new JPanel();
-        menuPanel.setLayout(new GridLayout(2,1));
-        menuPanel.add(new JLabel("Menu:"));
-        menuPanel.add(menu);
+        menuPanel.add(this.menu);
         this.add(menuPanel, BorderLayout.NORTH);
         this.add(tabPan, BorderLayout.CENTER);
 
