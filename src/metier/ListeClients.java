@@ -15,6 +15,7 @@ public class ListeClients extends Observable{
     public boolean next;
     public UtilisateursDao utilisateursDao;
     public Utilisateurs utilisateurs;
+    private int codeZone;
 
 
 
@@ -36,7 +37,7 @@ public class ListeClients extends Observable{
 
 
 
-        this.utilisateurs = utilisateursDao.selectClients(22);
+        this.utilisateurs = utilisateursDao.selectClients(codeZone);
 
 
     }
@@ -52,4 +53,10 @@ public class ListeClients extends Observable{
     public Utilisateurs getUtilisateurs() {
         return utilisateurs;
     }
+
+    public void setCodeZone(int codeZone) {
+        this.codeZone = codeZone;
+    }
 }
+
+

@@ -20,10 +20,10 @@ public class ListeVisites {
     }
 
 
-    public void create(){
+    public void create(int zone){
 
 
-        visites = visitesDao.selectVisites(22);
+        visites = visitesDao.selectVisites(zone);
     }
 
 

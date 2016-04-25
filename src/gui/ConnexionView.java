@@ -6,7 +6,7 @@ import javax.swing.*;
 import javax.swing.plaf.DimensionUIResource;
 import java.awt.*;
 
-public class ConnexionView extends Panel  {
+public class ConnexionView extends JPanel  {
 	
 	/**
 	 * 
@@ -15,7 +15,9 @@ public class ConnexionView extends Panel  {
 	
 	private JTextField idField;
 	private JPasswordField pwdField;
+	private JLabel error;
 	private JButton bouton;
+	private Image image;
 
 	public ConnexionView(){
 		
@@ -23,6 +25,8 @@ public class ConnexionView extends Panel  {
 		this.idField = new JTextField("id");
 		this.pwdField = new JPasswordField("pwd");
 		this.bouton = new JButton("se Connecter");
+		this.image = new ImageIcon("../images/laitue.JPG").getImage();
+        this.error = new JLabel("");
 
 		
 		
@@ -31,6 +35,13 @@ public class ConnexionView extends Panel  {
 
 	public void init(){
 
+
+        Dimension size = new Dimension(image.getWidth(null), image.getHeight(null));
+        setPreferredSize(size);
+        setMinimumSize(size);
+        setMaximumSize(size);
+        setSize(size);
+
 		idField.setColumns(10);
 		pwdField.setColumns(10);
 
@@ -38,8 +49,11 @@ public class ConnexionView extends Panel  {
 		this.add(idField);
 		this.add(pwdField);
 		this.add(bouton);
+		this.add(error);
 
 	}
+
+
 
 	public JTextField getIdField() {
 		return idField;
@@ -53,4 +67,12 @@ public class ConnexionView extends Panel  {
 	public JButton getBouton() {
 		return bouton;
 	}
+
+
+	public JLabel getError() {
+
+		return error;
+	}
+
+
 }

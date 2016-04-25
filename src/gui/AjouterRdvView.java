@@ -6,6 +6,7 @@ import metier.Utilisateur;
 import javax.swing.*;
 import java.awt.*;
 import java.text.DateFormat;
+import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 
 /**
@@ -16,107 +17,77 @@ public class AjouterRdvView extends JPanel{
 
 
     private Toolbar menu;
+    private JPanel menuPanel;
+    private JPanel form;
+    private JPanel message;
     private JComboBox choixClient;
-    private JFormattedTextField dateField;
+    private JSpinner dateSpinner;
+    private JSpinner timeSpinner;
+    private JTextField lieuTxt;
+    private JTextField interlocuteurTxt;
     private JButton ajouterB;
     private String[] utilisateurs;
     private UtilisateursDao utilisateursDao;
-
+    private SpinnerDateModel dateModel;
+    private SpinnerDateModel timeModel;
+    private JLabel state;
 
     public AjouterRdvView(UtilisateursDao utilisateursDao){
 
         this.utilisateursDao = utilisateursDao;
         this.menu = new Toolbar();
         this.setLayout(new BorderLayout());
-        JPanel menuPanel = new JPanel();
-        JPanel form = new JPanel();
-        menuPanel.add(this.menu);
-        this.choixClient = new JComboBox();
-        form.add(new JLabel("Nouveau RDV:"));
-        form.add(new JLabel("Client:"));
-        form.add(choixClient);
-        JSpinner dateSpinner = new JSpinner();
-        dateSpinner.setModel(new SpinnerDateModel());
-        JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(dateSpinner, "dd-MM-yyyy");
-        dateEditor.getTextField().setEditable(false);
-        dateSpinner.setEditor(dateEditor);
-
-        form.add(new JLabel("Date:"));
-        form.add(dateSpinner);
-        JSpinner timeSpinner = new JSpinner();
-        timeSpinner.setModel(new SpinnerDateModel());
-        JSpinner.DateEditor timeEditor =  new JSpinner.DateEditor(timeSpinner, "hh-mm-ss");
-        timeEditor.getTextField().setEditable(false);
-        timeSpinner.setEditor(timeEditor);
-        form.add(new JLabel("heure:"));
-        form.add(timeSpinner);
-        form.add(new JLabel("Lieu"));
-        JTextField lieuTxt = new JTextField();
-        lieuTxt.setColumns(10);
-        form.add(lieuTxt);
-        form.add(new JLabel("Interlocuteur"));
-        JTextField interlocuteurTxt = new JTextField();
-        interlocuteurTxt.setColumns(10);
-        form.add(interlocuteurTxt);
+        menuPanel = new JPanel();
+        message = new JPanel();
+        dateSpinner = new JSpinner();
+        lieuTxt = new JTextField();
+        timeSpinner = new JSpinner();
+        interlocuteurTxt = new JTextField();
         this.ajouterB = new JButton("Enregistrer");
-        form.add(ajouterB);
-        form.revalidate();
-        form.repaint();
-
-        this.add(form, BorderLayout.CENTER);
-
-        this.add(menuPanel, BorderLayout.NORTH);
-
-
+        state = new JLabel("");
     }
 
 
-    public void reInit(){
+    public void init(){
 
-        this.removeAll();
-        this.menu = new Toolbar();
-        this.setLayout(new BorderLayout());
-        JPanel menuPanel = new JPanel();
-        JPanel form = new JPanel();
+
+
+
+        form = new JPanel();
         menuPanel.add(this.menu);
         this.choixClient = new JComboBox();
         form.add(new JLabel("Nouveau RDV:"));
         form.add(new JLabel("Client:"));
         form.add(choixClient);
-        JSpinner dateSpinner = new JSpinner();
-        dateSpinner.setModel(new SpinnerDateModel());
+        this.dateModel = new SpinnerDateModel();
+        dateSpinner.setModel(dateModel);
         JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(dateSpinner, "dd-MM-yyyy");
         dateEditor.getTextField().setEditable(false);
         dateSpinner.setEditor(dateEditor);
-
         form.add(new JLabel("Date:"));
         form.add(dateSpinner);
-        JSpinner timeSpinner = new JSpinner();
-        timeSpinner.setModel(new SpinnerDateModel());
+        this.timeModel = new SpinnerDateModel();
+        timeSpinner.setModel(timeModel);
         JSpinner.DateEditor timeEditor =  new JSpinner.DateEditor(timeSpinner, "hh-mm-ss");
         timeEditor.getTextField().setEditable(false);
         timeSpinner.setEditor(timeEditor);
         form.add(new JLabel("heure:"));
         form.add(timeSpinner);
         form.add(new JLabel("Lieu"));
-        JTextField lieuTxt = new JTextField();
         lieuTxt.setColumns(10);
         form.add(lieuTxt);
         form.add(new JLabel("Interlocuteur"));
-        JTextField interlocuteurTxt = new JTextField();
         interlocuteurTxt.setColumns(10);
         form.add(interlocuteurTxt);
-        this.ajouterB = new JButton("Enregistrer");
         form.add(ajouterB);
+        form.add(state);
         form.revalidate();
         form.repaint();
-        menu.revalidate();
-        menu.repaint();
 
         this.add(form, BorderLayout.CENTER);
 
         this.add(menuPanel, BorderLayout.NORTH);
-
+        this.add(message, BorderLayout.SOUTH);
 
 
     }
@@ -140,6 +111,52 @@ public class AjouterRdvView extends JPanel{
     public Toolbar getMenu() {
         return menu;
     }
+
+    public JPanel getForm() {
+        return form;
+    }
+
+    public JButton getAjouterB() {
+        return ajouterB;
+    }
+
+    public JPanel getMenuPanel() {
+        return menuPanel;
+    }
+
+    public JSpinner getDateSpinner() {
+        return dateSpinner;
+    }
+
+    public JSpinner getTimeSpinner() {
+        return timeSpinner;
+    }
+
+    public JTextField getInterlocuteurTxt() {
+        return interlocuteurTxt;
+    }
+
+    public JTextField getLieuTxt() {
+        return lieuTxt;
+    }
+
+    public SpinnerDateModel getDateModel() {
+        return dateModel;
+    }
+
+    public SpinnerDateModel getTimeModel() {
+        return timeModel;
+    }
+
+    public JPanel getMessage() {
+        return message;
+    }
+
+    public void setState(String msg){
+
+        this.state.setText(msg);
+    }
 }
+
 
 

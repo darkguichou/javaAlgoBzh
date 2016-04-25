@@ -32,9 +32,10 @@ public class UtilisateursDao {
 		
 		try {
 			
-			String query = "SELECT * FROM utilisateurs, visites WHERE utilisateurs.codeZone =" + zone + " and utilisateurs.teleprospecteur = 0 and utilisateurs.commercial = 0   ORDER BY visites.dateVisite DESC";
+			String query = "SELECT * FROM (SELECT codeClient, MAX(visites.dateVisite) FROM visites GROUP BY codeClient ORDER BY visites.dateVisite) AS lastVisites, utilisateurs, zones " +
+					"WHERE lastVisites.codeClient = utilisateurs.codeClient AND utilisateurs.codeZone = zones.codeZone AND utilisateurs.codeZone = " + zone ;
  
-			//partir là dessus: SELECT * FROM utilisateurs, visites WHERE utilisateurs.codeZone = 35 and utilisateurs.teleprospecteur = 0 and utilisateurs.commercial = 0 
+
 			ResultSet res = db.exec(query);
 			
 			while (res.next()){

@@ -31,7 +31,7 @@ public class VisitesDao {
 
 		try {
 
-			String query = "SELECT * FROM visites, utilisateurs, zones WHERE utilisateurs.codeZone =" + zone + " and visites.dateVisite > CURRENT_DATE and zones.codeZone = utilisateurs.codeZone";
+			String query = "SELECT * FROM visites, utilisateurs, zones WHERE utilisateurs.codeZone =" + zone + " and visites.dateVisite > CURRENT_DATE and zones.codeZone = utilisateurs.codeZone and utilisateurs.codeClient = visites.codeClient";
 			ResultSet res = db.exec(query);
 
 			while (res.next()){
@@ -68,20 +68,21 @@ public class VisitesDao {
 	}
 
 
-	public boolean insertVisite(Date dateVisite, Time heureVisite, String lieuVisite, String interlocuteur, int idClient)
+	public boolean insertVisite(String codeClient, String codeCommercial , Date dateVisite, Time heureVisite, String lieuVisite, String interlocuteur)
 	{
 
 		boolean res = false;
 
 		try {
 
-			String query = "INSERT INTO visites VALUES ( NULL, ?, ?, ?, ?, ?)";
+			String query = "INSERT INTO visites VALUES ( NULL, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement prepare = db.prepare(query);
-			prepare.setDate(1, dateVisite);
-			prepare.setTime(2, heureVisite);
-			prepare.setString(3, lieuVisite);
-			prepare.setString(4, interlocuteur);
-			prepare.setInt(5, idClient);
+			prepare.setString(1, codeClient);
+			prepare.setString(2, codeCommercial);
+			prepare.setDate(3, dateVisite);
+			prepare.setTime(4, heureVisite);
+			prepare.setString(5, lieuVisite);
+			prepare.setString(6, interlocuteur);
 			prepare.execute();
 			res = true;
 

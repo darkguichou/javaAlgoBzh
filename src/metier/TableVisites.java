@@ -34,6 +34,11 @@ public class TableVisites extends AbstractTableModel {
     }
 
     @Override
+    public String getColumnName(int column) {
+        return titles[column];
+    }
+
+    @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
 
         switch (columnIndex){

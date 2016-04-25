@@ -1,10 +1,12 @@
 package gui;
 
+import controllers.AjouterRdvListener;
 import controllers.ConnexionListener;
 import controllers.MenuListener;
 import dao.Db;
 import dao.UtilisateursDao;
 import dao.VisitesDao;
+import metier.AjouterRdvModel;
 import metier.Connexion;
 import metier.ListeClients;
 import metier.ListeVisites;
@@ -29,6 +31,7 @@ public class GuiMain {
 
         //Instanciation des Modèles
 		Connexion connexion = new Connexion(utilisateursDao);
+        AjouterRdvModel ajouterRdvModel = new AjouterRdvModel(visitesDao);
         ListeClients listeClients = new ListeClients();
         ListeVisites listeVisites = new ListeVisites();
         listeClients.init(utilisateursDao);
@@ -45,9 +48,11 @@ public class GuiMain {
         //Instanciation des Listeners
         ConnexionListener connexionListener = new ConnexionListener(connexionView, connexion);
         MenuListener menuListener = new MenuListener(listeClientView, connexionView, listeVisitesView, ajouterRdvView);
+        AjouterRdvListener ajouterRdvListener = new AjouterRdvListener(ajouterRdvView, ajouterRdvModel);
 
         //Mise en place des listeners
         connexionView.getBouton().addMouseListener(connexionListener);
+        ajouterRdvView.getAjouterB().addMouseListener(ajouterRdvListener);
         listeClientView.getMenu().setListeners(menuListener);
         listeVisitesView.getMenu().setListeners(menuListener);
         ajouterRdvView.getMenu().setListeners(menuListener);
@@ -56,10 +61,11 @@ public class GuiMain {
         listeClientView.init();
         connexionView.init();
         listeVisitesView.init();
+        ajouterRdvView.init();
 
         //Création de la fenètre
-		Fenetre fenetre = new Fenetre(menuListener, connexionView,listeClientView, listeVisitesView, ajouterRdvView, connexion, listeClients, listeVisites);
-		
+		Fenetre fenetre = new Fenetre(menuListener, connexionView,listeClientView, listeVisitesView, ajouterRdvView, connexion, ajouterRdvModel , listeClients, listeVisites);
+
 
 	}
 

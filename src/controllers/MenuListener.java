@@ -59,6 +59,17 @@ public class MenuListener extends Observable implements MouseListener {
         }
 
 
+        else if(e.getSource().equals(listeClientView.getMenu().getDeconnexion()) || e.getSource().equals(listeVisitesView.getMenu().getDeconnexion()) || e.getSource().equals(ajouterRdvView.getMenu().getDeconnexion())){
+
+
+            setChanged();
+            notifyObservers(null);
+            System.out.println("Deconnexion");
+
+
+        }
+
+
     }
 
     @Override
