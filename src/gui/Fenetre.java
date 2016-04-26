@@ -39,7 +39,7 @@ public class Fenetre extends JFrame implements Observer{
         ajouterRdvModel.addObserver(this);
         listeClients.addObserver(this);
         this.setTitle("Algo Breizh:");
-        this.setMinimumSize(new Dimension(1600, 900));
+        this.setMinimumSize(new Dimension(800, 450));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setEnabled(true);
         this.setVisible(true);
@@ -49,7 +49,7 @@ public class Fenetre extends JFrame implements Observer{
         this.ajouterRdvView = ajouterRdvView;
 
         //Init avec la vue initiale
-        this.getContentPane().add(this.connexionView);
+        this.getContentPane().add(this.connexionView, BorderLayout.CENTER);
 
 
     }
@@ -131,10 +131,12 @@ public class Fenetre extends JFrame implements Observer{
                     ListeClientTable table = new ListeClientTable(listeClients.getUtilisateurs());
                     table.create();
                     listeClientView.getTabPanel().setViewportView(table.getTable());
+                    listeClientView.getMenu().getListeCilentsB().setBackground(Color.white);
+                    listeClientView.getMenu().revalidate();
+                    listeClientView.getMenu().repaint();
                     this.getContentPane().add(listeClientView);
                     revalidate();
                     repaint();
-                    System.out.println("menu: clients");
 
 
                 }
@@ -161,8 +163,7 @@ public class Fenetre extends JFrame implements Observer{
                         this.getContentPane().removeAll();
                         this.getContentPane().add(connexionView);
 
-                        listeVisitesView.getTabPan().setViewportView(new JLabel("yapas"));
-                        System.out.println("yapas");
+                        listeVisitesView.getTabPan().setViewportView(new JLabel("Aucunes visites de prévues pour l'instant."));
 
                     }
                     this.getContentPane().add(listeVisitesView);

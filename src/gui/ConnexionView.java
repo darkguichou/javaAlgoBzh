@@ -45,11 +45,27 @@ public class ConnexionView extends JPanel  {
 		idField.setColumns(10);
 		pwdField.setColumns(10);
 
-		this.add(new JLabel("Connexion:"));
-		this.add(idField);
-		this.add(pwdField);
-		this.add(bouton);
-		this.add(error);
+
+		this.setLayout(new GridBagLayout());
+        GridBagConstraints constraint = new GridBagConstraints();
+        constraint.gridx = 1;
+        constraint.gridy = 1;
+        constraint.insets = new Insets(10,0, 0, 10);
+
+
+		this.add(new JLabel("Connexion:"), constraint);
+        constraint.gridx = 1;
+        constraint.gridy = 2;
+		this.add(idField, constraint);
+        constraint.gridx = 1;
+        constraint.gridy = 3;
+		this.add(pwdField, constraint);
+        constraint.gridx = 1;
+        constraint.gridy = 5;
+		this.add(bouton, constraint);
+        constraint.gridx = 1;
+        constraint.gridy = 6;
+		this.add(error, constraint);
 
 	}
 

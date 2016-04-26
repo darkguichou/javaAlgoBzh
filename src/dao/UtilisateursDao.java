@@ -44,7 +44,7 @@ public class UtilisateursDao {
 				String email = res.getString("email");
 				String nom = res.getString("nom");
 				int codeZone = res.getInt("codeZone");
-				utilisateurs.getClients().add(new Client(id, code, email, nom, codeZone));
+				utilisateurs.getClients().add(new Utilisateur(id, code, email, nom, codeZone));
 				
 				
 				

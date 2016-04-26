@@ -50,11 +50,9 @@ public class AjouterRdvView extends JPanel{
 
     public void init(){
 
-
-
-
         form = new JPanel();
         menuPanel.add(this.menu);
+
         this.choixClient = new JComboBox();
         form.add(new JLabel("Nouveau RDV:"));
         form.add(new JLabel("Client:"));
@@ -84,8 +82,8 @@ public class AjouterRdvView extends JPanel{
         form.revalidate();
         form.repaint();
 
+        //Ajout des Panels
         this.add(form, BorderLayout.CENTER);
-
         this.add(menuPanel, BorderLayout.NORTH);
         this.add(message, BorderLayout.SOUTH);
 
