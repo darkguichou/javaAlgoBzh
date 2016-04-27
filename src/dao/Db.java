@@ -1,19 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dao;
+
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+
 
 import java.sql.*;
 
 import com.mysql.jdbc.PreparedStatement;
 
-/**
- *
- * @author Utilisateur
- */
+
 public class Db {
+
 
 
 	private String url;
@@ -24,13 +22,10 @@ public class Db {
 
 
 
-	public Db(String url, String user, String mdp){
+	public Db(){
 
 
 
-		this.url = url;
-		this.user = user;
-		this.mdp = mdp;
 
 	}
 
@@ -42,8 +37,8 @@ public class Db {
 
 			Class.forName("com.mysql.jdbc.Driver");
 
-			this.co = (Connection) DriverManager.getConnection(this.url, this.user , this.mdp );
-			this.statement = this.co.createStatement();
+            this.co = DriverManager.getConnection("jdbc:mysql://localhost/newalb","algobzh","algobzh");
+            this.statement = this.co.createStatement();
 			msg = "La connection a bien étée éffectuée.";
 
 		} catch (ClassNotFoundException | SQLException e) {

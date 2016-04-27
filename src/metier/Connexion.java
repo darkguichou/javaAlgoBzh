@@ -2,7 +2,9 @@ package metier;
 
 import dao.UtilisateursDao;
 
-public class Connexion {
+import java.util.Observable;
+
+public class Connexion extends Observable{
 	
 	
 	private String identifiant;
@@ -12,14 +14,21 @@ public class Connexion {
 	private Commercial commercial;
 	
 	
+
+
+
+	public Connexion(UtilisateursDao utilisateursDao){
+
+
+        this.utilisateursDao = utilisateursDao;
+
+	}
 	
-	
-	public Connexion(String identifiant, String mdp, UtilisateursDao utilisateursDao){
+	public void init(String identifiant, String mdp){
 		
 		
 		this.identifiant = identifiant;
 		this.mdp = mdp;
-		this.utilisateursDao = utilisateursDao;
 
 		
 		
@@ -27,20 +36,23 @@ public class Connexion {
 	}
 	
 	
-	public boolean connecter(){
+	public void connecter(){
 		
 		
 		this.commercial = utilisateursDao.selectCommercial(this.identifiant);
 		
-		if (commercial.getCodeClient() != null){
+		if (commercial.getCode() != null){
 			
 			
-			this.etat = true; 
+			setEtat(true);
 			
 		}
-		
-		
-		return this.etat;
+
+		else{
+
+			setEtat(false);
+		}
+
 		
 		
 		
@@ -53,8 +65,19 @@ public class Connexion {
 		return this.commercial;
 		
 	}
-	
-	
-	
+
+
+	public void setEtat(boolean etat) {
+		this.etat = etat;
+		setChanged();
+		notifyObservers(this);
+
+	}
+
+	public boolean getEtat(){
+
+		return this.etat;
+	}
+
 
 }
