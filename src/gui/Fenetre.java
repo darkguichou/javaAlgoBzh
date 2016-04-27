@@ -66,14 +66,14 @@ public class Fenetre extends JFrame implements Observer {
         //*************************Observatiton du modèle de connexion**************************************
         if (o instanceof Connexion) {
 
-            //########CONNEXION -> VALIDE#########
+            //########CONNEXION -> VALIDE############
             if (connexion.getEtat()) {
 
 
                 //Récupération du commercial renseigné à la connexion
                 this.commercial = this.connexion.getCommercial();
 
-                //Suppression de tout les panels
+                //Supperssion des vue active
                 this.getContentPane().removeAll();
 
                 //Récupération des clients affectés au commercial et génération de la liste des clients
@@ -126,30 +126,47 @@ public class Fenetre extends JFrame implements Observer {
             ajouterRdvView.repaint();
 
 
+            //******************Observation du Menu******************
         } else if (o instanceof MenuListener) {
 
 
+            //################DECONNEXION##################
             if (arg == null) {
 
-
-                System.out.println("deco");
+                //Suppression de la vue active
                 this.getContentPane().removeAll();
+
+                //Ajout de la vue correspondante
                 this.getContentPane().add(connexionView);
+
+                //Régénératiopn de la fenètre
                 this.revalidate();
                 this.repaint();
+
 
             } else {
 
 
+                //#################LISTE DES CLIENTS##################
                 if (arg.equals(listeClientView)) {
 
+
+                    //Suppressions de la vue active
                     this.getContentPane().removeAll();
+
+                    //Récupération de la liste des clients de la zone correspondante
                     listeClients.setCodeZone(commercial.getZone());
                     listeClients.create();
+
+                    //Génération de l'affichage de la laiste des clietns (JTable)
                     ListeClientTable table = new ListeClientTable(listeClients.getUtilisateurs());
                     table.create();
+
+                    //Paramétrage de la vue
                     listeClientView.getTabPanel().setViewportView(table.getTable());
                     listeClientView.getMenu().getListeCilentsB().setBackground(Color.white);
+
+                    //Régénération de la vue et de la fenètre
                     listeClientView.getMenu().revalidate();
                     listeClientView.getMenu().repaint();
                     this.getContentPane().add(listeClientView);
@@ -159,27 +176,38 @@ public class Fenetre extends JFrame implements Observer {
 
                 }
 
+                //###############LISTE DES VISITES PREVUES####################
                 if (arg.equals(listeVisitesView)) {
 
-
+                    //Suppression de la vue active
                     this.getContentPane().removeAll();
+
+                    //Récupération de la liste des visites correpondantes à la zone
                     listeVisites.create(commercial.getZone());
+
+                    //Paramétrage du Menu
                     listeVisitesView.getMenu().getListeVisitesB().setBackground(Color.white);
+
+                    //Régénération du menu
                     listeVisitesView.getMenu().revalidate();
                     listeVisitesView.getMenu().repaint();
 
+
+                    //CAS: "il y a des visites de prévues."
                     if (!listeVisites.getVisites().getVisites().isEmpty()) {
 
-                        System.out.println("ya");
+                        //Génération de l'affichage de la liste des visites
                         ListeVisitesTable table = new ListeVisitesTable(listeVisites.getVisites());
                         table.create();
+
+                        //Ajout de l'affichage à la vue
                         listeVisitesView.getTabPan().setViewportView(table.getTable());
 
 
                     } else {
 
-                        this.getContentPane().removeAll();
-                        this.getContentPane().add(connexionView);
+
+                        this.getContentPane().add(listeClientView);
 
                         listeVisitesView.getTabPan().setViewportView(new JLabel("Aucunes visites de prévues pour l'instant."));
 
