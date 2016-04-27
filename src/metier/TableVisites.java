@@ -11,7 +11,7 @@ import java.util.List;
 public class TableVisites extends AbstractTableModel {
 
     public List<Visite> visites;
-    public String[] titles = {"id", "date", "heure", "lieu", "interlocuteur", "idClient", "zone"};
+    public String[] titles = { "nom", "ville", "date", "heure", "lieu", "interlocuteur"};
 
 
 
@@ -44,19 +44,17 @@ public class TableVisites extends AbstractTableModel {
         switch (columnIndex){
 
             case 0:
-                return visites.get(rowIndex).getId();
+                return visites.get(rowIndex).getNom();
             case 1:
-                return visites.get(rowIndex).getDate();
+                return visites.get(rowIndex).getVille();
             case 2:
-                return visites.get(rowIndex).getHeure();
+                return visites.get(rowIndex).getDate();
             case 3:
-                return visites.get(rowIndex).getLieu();
+                return visites.get(rowIndex).getHeure();
             case 4:
-                return visites.get(rowIndex).getInterlocuteur();
+                return visites.get(rowIndex).getLieu();
             case 5:
-                return visites.get(rowIndex).getIdClient();
-            case 6:
-                return visites.get(rowIndex).getZone();
+                return visites.get(rowIndex).getInterlocuteur();
             default:
                 return null;
 

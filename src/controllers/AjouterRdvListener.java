@@ -41,7 +41,7 @@ public class AjouterRdvListener implements MouseListener{
             java.sql.Time time = new java.sql.Time(vue.getTimeModel().getDate().getTime());
 
 
-            model.addVisite(vue.getChoixClient().getSelectedItem().toString(), model.getCommercial().getCodeClient(), date, time, vue.getLieuTxt().getText(), vue.getInterlocuteurTxt().getText());
+            model.addVisite(vue.getChoixClient().getSelectedItem().toString(), model.getCommercial().getCode(), date, time, vue.getLieuTxt().getText(), vue.getInterlocuteurTxt().getText());
             vue.setState("Visite bien créée. (x" + i + ")");
             Border border = BorderFactory.createLineBorder(Color.LIGHT_GRAY);
             vue.getLieuTxt().setText("");

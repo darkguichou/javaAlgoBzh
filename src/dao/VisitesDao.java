@@ -43,9 +43,11 @@ public class VisitesDao {
 				String interlocuteur = res.getString("visites.interlocuteur");
 				int idClient = res.getInt("utilisateurs.idUtilisateur");
 				String nomZone = res.getString("zones.nomZone");
+				String nom = res.getString("utilisateurs.nom");
+				String ville = res.getString("utilisateurs.ville");
 
 
-				visites.getVisites().add(new Visite(id, date, time, lieu, interlocuteur, idClient, nomZone));
+				visites.getVisites().add(new Visite(id, date, time, lieu, interlocuteur, idClient, nomZone, nom, ville));
 
 
 			}

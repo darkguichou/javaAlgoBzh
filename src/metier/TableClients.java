@@ -11,7 +11,7 @@ import java.util.List;
 public class TableClients extends AbstractTableModel {
 
     public List<Utilisateur> utilisateurs;
-    public String[] title = {"id", "code", "mail", "nom", "codeZONE"};
+    public String[] title = {"Code", "Nom", "Ville", "telephone", "email" };
 
 
     public TableClients(List utilisateurs){
@@ -45,15 +45,15 @@ public class TableClients extends AbstractTableModel {
         switch (columnIndex){
 
             case 0:
-                return utilisateurs.get(rowIndex).getId();
-            case 1:
                 return utilisateurs.get(rowIndex).getCode();
-            case 2:
-                return utilisateurs.get(rowIndex).getEmail();
-            case 3:
+            case 1:
                 return utilisateurs.get(rowIndex).getNom();
+            case 2:
+                return utilisateurs.get(rowIndex).getVille();
+            case 3:
+                return utilisateurs.get(rowIndex).getNumTel();
             case 4:
-                return utilisateurs.get(rowIndex).getCOdeZone();
+                return utilisateurs.get(rowIndex).getEmail();
             default:
                 return null;
 

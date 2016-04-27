@@ -9,10 +9,7 @@ import java.awt.*;
 import java.util.Observable;
 import java.util.Observer;
 
-public class Fenetre extends JFrame implements Observer{
-
-
-
+public class Fenetre extends JFrame implements Observer {
 
 
     Connexion connexion;
@@ -27,26 +24,32 @@ public class Fenetre extends JFrame implements Observer{
     private Commercial commercial;
     private static final long serialVersionUID = 1L;
 
-    public Fenetre( MenuListener menuListener,ConnexionView connexionView, ListeClientView listeClientView, ListeVisitesView listeVisitesView, AjouterRdvView ajouterRdvView , Connexion connexion, AjouterRdvModel ajouterRdvModel, ListeClients listeCliens, ListeVisites listeVisites){
+    public Fenetre(MenuListener menuListener, ConnexionView connexionView, ListeClientView listeClientView, ListeVisitesView listeVisitesView, AjouterRdvView ajouterRdvView, Connexion connexion, AjouterRdvModel ajouterRdvModel, ListeClients listeCliens, ListeVisites listeVisites) {
 
 
+        //<---------------------------------------------Construction de la classe-------------------------------------------------------------------------------------------->
         this.ajouterRdvModel = ajouterRdvModel;
         this.connexion = connexion;
         this.listeClients = listeCliens;
         this.listeVisites = listeVisites;
-        menuListener.addObserver(this);
-        connexion.addObserver(this);
-        ajouterRdvModel.addObserver(this);
-        listeClients.addObserver(this);
-        this.setTitle("Algo Breizh:");
-        this.setMinimumSize(new Dimension(800, 450));
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setEnabled(true);
-        this.setVisible(true);
         this.connexionView = connexionView;
         this.listeClientView = listeClientView;
         this.listeVisitesView = listeVisitesView;
         this.ajouterRdvView = ajouterRdvView;
+
+        //Inscription de la fenétre aux Observables
+        menuListener.addObserver(this);
+        connexion.addObserver(this);
+        ajouterRdvModel.addObserver(this);
+        listeClients.addObserver(this);
+
+        //Paramétrage de la Fenétre
+        this.setTitle("Algo Breizh:");
+        this.setMinimumSize(new Dimension(1500, 500));
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
+        this.setEnabled(true);
+        this.setVisible(true);
 
         //Init avec la vue initiale
         this.getContentPane().add(this.connexionView, BorderLayout.CENTER);
@@ -55,35 +58,53 @@ public class Fenetre extends JFrame implements Observer{
     }
 
 
-
+    //<--------------------------------------------------------------Observation des différents modèles ou vues-------------------------------------------------------------−>
     @Override
     public void update(Observable o, Object arg) {
 
 
+        //*************************Observatiton du modèle de connexion**************************************
         if (o instanceof Connexion) {
 
+            //########CONNEXION -> VALIDE#########
             if (connexion.getEtat()) {
 
 
+                //Récupération du commercial renseigné à la connexion
                 this.commercial = this.connexion.getCommercial();
+
+                //Suppression de tout les panels
                 this.getContentPane().removeAll();
-                listeClients.setCodeZone(commercial.getCodeZone());
+
+                //Récupération des clients affectés au commercial et génération de la liste des clients
+                listeClients.setCodeZone(commercial.getZone());
                 listeClients.create();
+
+                //Génération de l'affichage (JTable) en fonction de la liste des clients
                 ListeClientTable table = new ListeClientTable(listeClients.getUtilisateurs());
                 table.create();
+
+                //Ajout de l'affichage à la vue
                 listeClientView.getTabPanel().setViewportView(table.getTable());
                 this.getContentPane().add(listeClientView);
 
+                //Regénération de la vue
                 revalidate();
                 repaint();
 
-            }else{
 
+                //###########CONNEXION -> NON-VALIDE#############
+            } else {
+
+                //Ajout de bordures rouges signalant une erreur d'identification
                 Border border = BorderFactory.createLineBorder(Color.red);
                 connexionView.getIdField().setBorder(border);
                 connexionView.getPwdField().setBorder(border);
+
+                //Ajout du message d'erreur
                 connexionView.getError().setText("Erreur de connexion.");
-                connexionView.getIdField().setBorder(border);
+
+                //Regénération de la vue et de la fenètre
                 connexionView.revalidate();
                 connexionView.repaint();
                 validate();
@@ -91,25 +112,24 @@ public class Fenetre extends JFrame implements Observer{
 
             }
 
-        }
+            //**********************Observation du modèle d'ajout de rendez vous****************************
+        } else if (o instanceof AjouterRdvModel) {
 
-        else if (o instanceof AjouterRdvModel){
 
+            //Ajout d'un message signalant que le rendez vous a bien été créé
+            ajouterRdvView.getMessage().add(new JLabel("Votre visite a bien été ajoutée"));
 
-          ajouterRdvView.getMessage().add(new JLabel("Votre visite a bien été ajoutée"));
+            //Régération de la vue
             ajouterRdvView.getMessage().revalidate();
             ajouterRdvView.getMessage().repaint();
             ajouterRdvView.revalidate();
             ajouterRdvView.repaint();
 
 
-
-        }
-
-       else  if (o instanceof MenuListener) {
+        } else if (o instanceof MenuListener) {
 
 
-            if (arg == null){
+            if (arg == null) {
 
 
                 System.out.println("deco");
@@ -118,15 +138,13 @@ public class Fenetre extends JFrame implements Observer{
                 this.revalidate();
                 this.repaint();
 
-            }
-
-            else {
+            } else {
 
 
                 if (arg.equals(listeClientView)) {
 
                     this.getContentPane().removeAll();
-                    listeClients.setCodeZone(commercial.getCodeZone());
+                    listeClients.setCodeZone(commercial.getZone());
                     listeClients.create();
                     ListeClientTable table = new ListeClientTable(listeClients.getUtilisateurs());
                     table.create();
@@ -145,7 +163,7 @@ public class Fenetre extends JFrame implements Observer{
 
 
                     this.getContentPane().removeAll();
-                    listeVisites.create(commercial.getCodeZone());
+                    listeVisites.create(commercial.getZone());
                     listeVisitesView.getMenu().getListeVisitesB().setBackground(Color.white);
                     listeVisitesView.getMenu().revalidate();
                     listeVisitesView.getMenu().repaint();
@@ -177,7 +195,7 @@ public class Fenetre extends JFrame implements Observer{
                     ajouterRdvModel.setCommercial(this.commercial);
                     this.getContentPane().removeAll();
 
-                    ajouterRdvView.setUtilisateurs(ajouterRdvView.getUtilisateursDao().selectClients(commercial.getCodeZone()).toCodeArray());
+                    ajouterRdvView.setUtilisateurs(ajouterRdvView.getUtilisateursDao().selectClients(commercial.getZone()).toCodeArray());
                     ajouterRdvView.getChoixClient().setModel(new DefaultComboBoxModel(ajouterRdvView.getUtilisateurs()));
                     ajouterRdvView.getForm().revalidate();
                     ajouterRdvView.getForm().repaint();
@@ -187,7 +205,6 @@ public class Fenetre extends JFrame implements Observer{
                     ajouterRdvView.revalidate();
                     ajouterRdvView.repaint();
 
-                    //faut ajouter les machins en attributs
 
                     this.getContentPane().add(ajouterRdvView);
                     this.validate();

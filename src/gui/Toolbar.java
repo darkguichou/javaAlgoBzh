@@ -23,7 +23,7 @@ public class Toolbar extends JToolBar{
 
 
         listeCilentsB = new JButton("Liste des clients");
-        listeVisitesB = new JButton("Liste des visites");
+        listeVisitesB = new JButton("Liste des visites prévues");
         savedRdV = new JButton("Enregistrer un RDV");
         deconnexion = new JButton("Déconnexion");
         deconnexion.setBackground(Color.red);

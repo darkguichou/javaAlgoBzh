@@ -41,7 +41,7 @@ public class Connexion extends Observable{
 		
 		this.commercial = utilisateursDao.selectCommercial(this.identifiant);
 		
-		if (commercial.getCodeClient() != null){
+		if (commercial.getCode() != null){
 			
 			
 			setEtat(true);
@@ -78,4 +78,6 @@ public class Connexion extends Observable{
 
 		return this.etat;
 	}
+
+
 }
