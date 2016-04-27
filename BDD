@@ -1,0 +1,376 @@
+-- phpMyAdmin SQL Dump
+-- version 4.6.0
+-- http://www.phpmyadmin.net
+--
+-- Host: localhost
+-- Generation Time: Apr 27, 2016 at 02:26 PM
+-- Server version: 10.0.23-MariaDB
+-- PHP Version: 5.6.20
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `newalb`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `articles`
+--
+
+CREATE TABLE `articles` (
+  `idArticle` int(11) NOT NULL,
+  `codeArticle` varchar(25) NOT NULL,
+  `libelleArticle` varchar(250) NOT NULL,
+  `imagesArticle` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `prix` float NOT NULL,
+  `unite` varchar(50) NOT NULL,
+  `TVA` float NOT NULL,
+  `idFamille` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `articles`
+--
+
+INSERT INTO `articles` (`idArticle`, `codeArticle`, `libelleArticle`, `imagesArticle`, `prix`, `unite`, `TVA`, `idFamille`) VALUES
+(1, 'AR00001', 'Wakamé biologique feuilles 50 g', '\'img/produits/wakame_paillette.jpg\'', 4.33, 'Sachet 50 g', 0.87, 1),
+(2, 'AR00002', 'Wakamé feuilles longues 200 g', '\'img/produits/wakame_feuille.jpg\'', 10.92, 'Sachet 200 g', 2.18, 1),
+(3, 'AR00003', 'Dulse biologique feuilles 50 g', '\'img/produits/laitue-de-mer-paillete.jpeg\'', 3.63, 'Sachet 50 g', 0.73, 2),
+(4, 'AR00004', 'Dulse biologique 200 g', '\'img/produits/laitue-de-mer-feuilles.jpeg\'', 10.42, 'Sachet 200 g', 2.08, 2),
+(5, 'AR00005', 'Kombu Royal - Jeunes pousses biologiques feuilles 50 g', '\'img/produits/chrondus-crispus.jpg\'', 4.71, 'Sachet 50 g', 0.94, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `commandes`
+--
+
+CREATE TABLE `commandes` (
+  `idCommande` int(11) NOT NULL,
+  `montant` float NOT NULL,
+  `dateCommande` datetime NOT NULL,
+  `codeClient` varchar(25) NOT NULL,
+  `valide` tinyint(1) NOT NULL,
+  `idUtilisateur` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `commandes`
+--
+
+INSERT INTO `commandes` (`idCommande`, `montant`, `dateCommande`, `codeClient`, `valide`, `idUtilisateur`) VALUES
+(13, 120.12, '2016-03-31 21:35:19', 'CL00001', 1, 1),
+(14, 2327.82, '2016-03-31 21:45:12', 'CL00001', 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `details`
+--
+
+CREATE TABLE `details` (
+  `idDetail` int(11) NOT NULL,
+  `codeArticle` varchar(10) NOT NULL,
+  `qteArticle` int(11) NOT NULL,
+  `montant` float NOT NULL,
+  `idCommande` int(11) NOT NULL,
+  `idCommande_commandes` int(11) NOT NULL,
+  `idArticle` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `details`
+--
+
+INSERT INTO `details` (`idDetail`, `codeArticle`, `qteArticle`, `montant`, `idCommande`, `idCommande_commandes`, `idArticle`) VALUES
+(1, 'AR00002', 11, 120.12, 0, 13, 2),
+(2, 'AR00002', 154, 1681.68, 0, 14, 2),
+(3, 'AR00003', 178, 646.14, 0, 14, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `familles`
+--
+
+CREATE TABLE `familles` (
+  `idFamille` int(11) NOT NULL,
+  `libelleFamille` varchar(250) NOT NULL,
+  `codeFamille` varchar(25) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `familles`
+--
+
+INSERT INTO `familles` (`idFamille`, `libelleFamille`, `codeFamille`) VALUES
+(1, 'Algues séchées  longues', 'FAR00001'),
+(2, 'Algues séchées  morceaux', 'FAR00002'),
+(3, 'Algues en conserve', 'FAR00003'),
+(4, 'Algues en conserve entières', 'FAR00004'),
+(5, 'Algues en poudre', 'FAR00005'),
+(6, 'Préparations culinaires', 'FAR00006'),
+(7, 'Pâtes  aux algues', 'FAR00007'),
+(8, 'Notices et recettes', 'FAR00008');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `utilisateurs`
+--
+
+CREATE TABLE `utilisateurs` (
+  `idUtilisateur` int(11) NOT NULL,
+  `codeClient` varchar(25) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(25) NOT NULL,
+  `nom` varchar(25) NOT NULL,
+  `prenom` varchar(25) NOT NULL,
+  `ville` varchar(25) NOT NULL,
+  `codePostal` varchar(20) NOT NULL,
+  `adresse` varchar(50) NOT NULL,
+  `codeZone` int(2) NOT NULL,
+  `telephone` varchar(10) NOT NULL,
+  `motDePasse` varchar(250) NOT NULL,
+  `teleprospecteur` tinyint(1) NOT NULL,
+  `commercial` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `utilisateurs`
+--
+
+INSERT INTO `utilisateurs` (`idUtilisateur`, `codeClient`, `email`, `nom`, `prenom`, `ville`, `codePostal`, `adresse`, `codeZone`, `telephone`, `motDePasse`, `teleprospecteur`, `commercial`) VALUES
+(1, 'CL00001', 'guichou9@gmail.com', 'Super U Landivisiau', '', 'LANDIVISIAU', '29400', '3 rue des Abers', 29, '', '$2y$12$FlI78FilMgi86hgeOGHEoeYM2E7AO/l.hrZpZr.XMNz1GRY8Qwbiq', 0, 0),
+(2, 'CL00002', '', 'Cora Ploufragan', '', 'PLOUFRAGAN', '22400', 'Zone commerciale de l\'Arvor', 22, '', '', 0, 0),
+(3, 'CL00003', '', 'Scarabée  Rennes Ouest', '', 'RENNES', '35000', '10, route de Lorient', 35, '', '', 0, 0),
+(4, 'CL00004', '', 'La Belle-Iloise Rennes', '', 'RENNES', '35000', '16, rue Hoche', 35, '', '', 0, 0),
+(5, 'CO00001', 'guichou9@gmail.com', 'KERMAREC', 'Gwen', '', '', '', 0, '0607080910', '$2y$12$FlI78FilMgi86hgeOGHEoeVQqnb6C1khLbERYFbbQb39xygHksck.', 1, 0),
+(6, 'CO00002', 'e.lefebure@algobreizh.com', 'LEFEBURE', 'Estelle', '', '', '', 0, '0612345678', '', 1, 0),
+(7, 'CO00003', 'g.decarantec@algobreizh.c', 'DE CARANTEC', 'Georges', '', '', '', 0, '065457687', '', 1, 0),
+(8, 'CO00004', 'y.keradoc@algobreizh.com', 'KERADOC', 'Yannick', '', '', '', 0, '0601020304', '', 1, 0),
+(9, 'CC00001', '', 'jean', 'claude', 'Detroit', '313', 'trailer park', 35, '556 587', 'fromage', 0, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `visites`
+--
+
+CREATE TABLE `visites` (
+  `idVisite` int(11) NOT NULL,
+  `codeClient` varchar(23) COLLATE utf8_unicode_ci NOT NULL,
+  `codeCommercial` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `dateVisite` date NOT NULL,
+  `heureVisite` time NOT NULL,
+  `lieuVisite` varchar(23) COLLATE utf8_unicode_ci NOT NULL,
+  `interlocuteur` varchar(23) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `visites`
+--
+
+INSERT INTO `visites` (`idVisite`, `codeClient`, `codeCommercial`, `dateVisite`, `heureVisite`, `lieuVisite`, `interlocuteur`) VALUES
+(1, 'CL00002', '', '2016-04-04', '18:31:24', 'rayon boire', 'joseph'),
+(2, 'CL00003', 'CC00001', '2016-04-11', '13:37:12', 'dsfs', 'c'),
+(3, 'CL00003', 'CC00001', '2016-04-12', '13:48:26', 'scsqv', ' svsdv'),
+(4, 'CL00003', 'CC00001', '2016-04-11', '13:50:30', 'd', 'x'),
+(5, 'CL00003', 'CC00001', '2016-04-11', '13:58:20', 'd', 'f'),
+(6, 'CL00003', 'CC00001', '2016-04-11', '13:58:20', 'd', 'f'),
+(7, 'CL00003', 'CC00001', '2016-04-11', '14:08:10', 'd', 'x'),
+(8, 'CL00003', 'CC00001', '2016-04-11', '14:09:31', 'c', 'c'),
+(9, 'CL00003', 'CC00001', '2016-04-11', '13:50:30', 'd', 'x'),
+(10, 'CL00003', 'CC00001', '2016-04-11', '13:50:30', 'd', 'x'),
+(11, 'CL00003', 'CC00001', '2016-04-11', '13:50:30', 'd', 'x'),
+(12, 'CL00003', 'CC00001', '2016-04-11', '13:50:30', 'd', 'x'),
+(13, 'CL00003', 'CC00001', '2016-04-11', '13:50:30', 'd', 'x'),
+(14, 'CL00003', 'CC00001', '2016-04-11', '13:50:30', 'd', 'x'),
+(15, 'CL00004', 'CC00001', '2016-04-11', '13:50:30', 'd', 'x'),
+(16, 'CL00004', 'CC00001', '2016-04-10', '15:19:34', 'g', 'l'),
+(17, 'CL00004', 'CC00001', '2016-04-10', '15:19:34', 'g', 'l'),
+(18, 'CL00004', 'CC00001', '2016-04-10', '15:19:34', 'g', 'l'),
+(19, 'CL00004', 'CC00001', '2016-04-10', '15:19:34', 'g', 'l'),
+(20, 'CL00004', 'CC00001', '2016-04-10', '15:19:34', 'g', 'l'),
+(21, 'CL00004', 'CC00001', '2016-04-12', '15:21:24', 'zafazpf', 'liohioyhi'),
+(22, 'CL00003', 'CC00001', '2016-04-07', '15:23:51', 'j', 'sd'),
+(23, 'CL00004', 'CC00001', '2016-04-13', '17:14:44', '864664', 'yjfjufyuif'),
+(24, 'CL00003', 'CC00001', '2016-04-13', '17:14:44', '864664', 'yjfjufyuif'),
+(25, 'CL00003', 'CC00001', '2016-04-13', '17:14:44', '864664', 'yjfjufyuif'),
+(26, 'CL00003', 'CC00001', '2016-04-20', '11:02:46', 'dsvs', 'dsvbsd'),
+(27, 'CL00003', 'CC00001', '2016-04-21', '11:03:51', 'dqsv', 'dsvd'),
+(28, 'CL00003', 'CC00001', '2016-04-24', '11:05:04', 'sqdvsd', 'dvss'),
+(29, 'CL00003', 'CC00001', '2016-04-21', '11:06:27', 'sqvsdvdsvs', 'dsvdsvdsvds'),
+(30, 'CL00003', 'CC00001', '2016-04-22', '11:08:11', 'zghezh', 'rnzgohbrezgmoer'),
+(31, 'CL00003', 'CC00001', '2016-04-22', '11:08:11', 'zghezh', 'rnzgohbrezgmoer'),
+(32, 'CL00003', 'CC00001', '2016-04-22', '11:08:11', 'zghezh', 'rnzgohbrezgmoer'),
+(33, 'CL00003', 'CC00001', '2016-04-21', '11:11:27', 'sdvdfv', 'fezfeszf'),
+(34, 'CL00003', 'CC00001', '2016-04-19', '11:12:43', 'gkreg', 'regnreig,re'),
+(35, 'CL00003', 'CC00001', '2016-04-19', '11:12:43', 'gkreg', 'regnreig,re'),
+(36, 'CL00003', 'CC00001', '2016-04-21', '11:15:37', 'dsvvs', 'd vsvdsv'),
+(37, 'CL00003', 'CC00001', '2016-04-19', '11:31:55', 'j*ger', 'rgejre*'),
+(38, 'CL00003', 'CC00001', '2016-04-19', '11:31:55', 'j*ger', 'rgejre*'),
+(39, 'CL00003', 'CC00001', '2016-04-19', '11:31:55', 'j*ger', 'rgejre*'),
+(40, 'CL00003', 'CC00001', '2016-04-19', '11:31:55', 'j*ger', 'rgejre*'),
+(41, 'CL00003', 'CC00001', '2016-04-19', '11:31:55', 'j*ger', 'rgejre*'),
+(42, 'CL00003', 'CC00001', '2016-04-19', '11:31:55', 'j*ger', 'rgejre*'),
+(43, 'CL00003', 'CC00001', '2016-04-19', '11:31:55', 'j*ger', 'rgejre*'),
+(44, 'CL00003', 'CC00001', '2016-04-19', '11:31:55', 'j*ger', 'rgejre*'),
+(45, 'CL00003', 'CC00001', '2016-04-19', '11:31:55', 'j*ger', 'rgejre*'),
+(46, 'CL00003', 'CC00001', '2016-04-19', '11:31:55', 'j*ger', 'rgejre*'),
+(47, 'CL00003', 'CC00001', '2016-04-22', '11:31:55', 'j*ger', 'rgejre*'),
+(48, 'CL00003', 'CC00001', '2016-04-22', '11:31:55', 'j*ger', 'rgejre*'),
+(49, 'CL00003', 'CC00001', '2016-04-22', '11:31:55', 'j*ger', 'rgejre*'),
+(50, 'CL00003', 'CC00001', '2016-04-22', '11:31:55', 'j*ger', 'rgejre*'),
+(51, 'CL00003', 'CC00001', '2016-04-22', '11:31:55', 'j*ger', 'rgejre*'),
+(52, 'CL00003', 'CC00001', '2016-04-22', '11:31:55', 'j*ger', 'rgejre*'),
+(53, 'CL00003', 'CC00001', '2016-04-19', '11:34:39', ')jrehj', 'gre,ore'),
+(54, 'CL00003', 'CC00001', '2016-04-19', '11:34:39', ')jrehj', 'gre,ore'),
+(55, 'CL00003', 'CC00001', '2016-04-19', '11:34:39', ')jrehj', 'gre,ore'),
+(56, 'CL00003', 'CC00001', '2016-04-19', '11:34:39', ')jrehj', 'gre,ore'),
+(57, 'CL00003', 'CC00001', '2016-04-19', '11:34:39', ')jrehj', 'gre,ore'),
+(58, 'CL00003', 'CC00001', '2016-04-19', '11:34:39', ')jrehj', 'gre,ore'),
+(59, 'CL00003', 'CC00001', '2016-04-19', '11:34:39', ')jrehj', 'gre,ore'),
+(60, 'CL00003', 'CC00001', '2016-04-22', '13:30:01', 'ùohr$ùph', 'grhumiregb'),
+(61, 'CL00004', 'CC00001', '2029-04-24', '13:30:01', 'Pékin', 'Jean-Claude Vandam'),
+(62, 'CL00003', 'CC00001', '2016-04-19', '13:58:02', 'efhùpùaz', 'rgrghùgezr'),
+(63, 'CL00003', 'CC00001', '2016-04-19', '14:16:43', 'dqvzvds', 'efez'),
+(64, 'CL00003', 'CC00001', '2016-04-19', '14:25:28', 'dsvzsv', 'rogrepùgpz'),
+(65, 'CL00003', 'CC00001', '2016-05-02', '13:36:17', 'shgù', 'dpùdfg'),
+(66, 'CL00003', 'CC00001', '2016-04-29', '16:57:06', 'dvds', 'vdsvds');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `zones`
+--
+
+CREATE TABLE `zones` (
+  `codeZone` int(2) NOT NULL,
+  `nomZone` varchar(20) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `zones`
+--
+
+INSERT INTO `zones` (`codeZone`, `nomZone`) VALUES
+(22, 'côtes d\'armor'),
+(29, 'Finistère'),
+(35, 'ille et vilaine'),
+(56, 'Morbihan');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `articles`
+--
+ALTER TABLE `articles`
+  ADD PRIMARY KEY (`idArticle`);
+
+--
+-- Indexes for table `commandes`
+--
+ALTER TABLE `commandes`
+  ADD PRIMARY KEY (`idCommande`),
+  ADD KEY `codeClient` (`codeClient`),
+  ADD KEY `FK_commandes_idUtilisateur` (`idUtilisateur`);
+
+--
+-- Indexes for table `details`
+--
+ALTER TABLE `details`
+  ADD PRIMARY KEY (`idDetail`),
+  ADD KEY `codeArticle` (`codeArticle`,`idCommande`),
+  ADD KEY `FK_details_idCommande_commandes` (`idCommande_commandes`),
+  ADD KEY `FK_details_idArticle` (`idArticle`);
+
+--
+-- Indexes for table `familles`
+--
+ALTER TABLE `familles`
+  ADD PRIMARY KEY (`idFamille`);
+
+--
+-- Indexes for table `utilisateurs`
+--
+ALTER TABLE `utilisateurs`
+  ADD PRIMARY KEY (`idUtilisateur`),
+  ADD UNIQUE KEY `codeClient` (`codeClient`);
+
+--
+-- Indexes for table `visites`
+--
+ALTER TABLE `visites`
+  ADD PRIMARY KEY (`idVisite`);
+
+--
+-- Indexes for table `zones`
+--
+ALTER TABLE `zones`
+  ADD PRIMARY KEY (`codeZone`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `articles`
+--
+ALTER TABLE `articles`
+  MODIFY `idArticle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT for table `commandes`
+--
+ALTER TABLE `commandes`
+  MODIFY `idCommande` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+--
+-- AUTO_INCREMENT for table `details`
+--
+ALTER TABLE `details`
+  MODIFY `idDetail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `familles`
+--
+ALTER TABLE `familles`
+  MODIFY `idFamille` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+--
+-- AUTO_INCREMENT for table `utilisateurs`
+--
+ALTER TABLE `utilisateurs`
+  MODIFY `idUtilisateur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+--
+-- AUTO_INCREMENT for table `visites`
+--
+ALTER TABLE `visites`
+  MODIFY `idVisite` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `commandes`
+--
+ALTER TABLE `commandes`
+  ADD CONSTRAINT `FK_commandes_idUtilisateur` FOREIGN KEY (`idUtilisateur`) REFERENCES `utilisateurs` (`idUtilisateur`);
+
+--
+-- Constraints for table `details`
+--
+ALTER TABLE `details`
+  ADD CONSTRAINT `FK_details_idArticle` FOREIGN KEY (`idArticle`) REFERENCES `articles` (`idArticle`),
+  ADD CONSTRAINT `FK_details_idCommande_commandes` FOREIGN KEY (`idCommande_commandes`) REFERENCES `commandes` (`idCommande`);
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
