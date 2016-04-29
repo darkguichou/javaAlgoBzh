@@ -38,7 +38,6 @@ public class Fenetre extends JFrame implements Observer {
         //Inscription de la fenétre aux Observables
         MenuListener menuListener = (MenuListener)this.listeners.get("menuListener");
         ConnexionModel connexionModel = (ConnexionModel)this.models.get("connexion");
-
         menuListener.addObserver(this);
         connexion.addObserver(this);
         ajouterRdvModel.addObserver(this);
