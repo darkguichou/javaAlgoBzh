@@ -38,10 +38,13 @@ public class Fenetre extends JFrame implements Observer {
         //Inscription de la fenétre aux Observables
         MenuListener menuListener = (MenuListener)this.listeners.get("menuListener");
         ConnexionModel connexionModel = (ConnexionModel)this.models.get("connexion");
+        AjouterRdvModel ajouterRdvModel = (AjouterRdvModel)this.models.get("ajouterRdv");
+        ListeClientsModel listeClientsModel = (ListeClientsModel)this.models.get("listeClients");
+
         menuListener.addObserver(this);
-        connexion.addObserver(this);
+        connexionModel.addObserver(this);
         ajouterRdvModel.addObserver(this);
-        listeClients.addObserver(this);
+        listeClientsModel.addObserver(this);
 
         //Paramétrage de la Fenétre
         this.setTitle("Algo Breizh:");
@@ -52,7 +55,7 @@ public class Fenetre extends JFrame implements Observer {
         this.setVisible(true);
 
         //Init avec la vue initiale
-        this.getContentPane().add(this.connexionView, BorderLayout.CENTER);
+        this.getContentPane().add((ConnexionView)this.views.get("connexion"), BorderLayout.CENTER);
 
 
     }
