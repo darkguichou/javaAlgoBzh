@@ -1,43 +1,44 @@
 package gui;
 
-import controllers.MenuListener;
-import metier.*;
+import dao.Dao;
+import gui.components.ListeClientTable;
+import gui.components.ListeVisitesTable;
+import gui.views.*;
+import listeners.MenuListener;
+import models.*;
+import models.entities.Commercial;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.MouseListener;
+import java.util.Hashtable;
 import java.util.Observable;
 import java.util.Observer;
 
 public class Fenetre extends JFrame implements Observer {
 
 
-    Connexion connexion;
-    AjouterRdvModel ajouterRdvModel;
-    ListeClients listeClients;
-    ListeVisites listeVisites;
-    MenuListener menuListener;
-    private ConnexionView connexionView;
-    private ListeClientView listeClientView;
-    private ListeVisitesView listeVisitesView;
-    private AjouterRdvView ajouterRdvView;
+    private Hashtable<String, Object>models = new Hashtable();
+    private Hashtable<String, View>views = new Hashtable();
+    private Hashtable<String, MouseListener>listeners = new Hashtable();
     private Commercial commercial;
     private static final long serialVersionUID = 1L;
 
-    public Fenetre(MenuListener menuListener, ConnexionView connexionView, ListeClientView listeClientView, ListeVisitesView listeVisitesView, AjouterRdvView ajouterRdvView, Connexion connexion, AjouterRdvModel ajouterRdvModel, ListeClients listeCliens, ListeVisites listeVisites) {
+    public Fenetre(Hashtable views, Hashtable models, Hashtable listeners) {
 
 
         //<---------------------------------------------Construction de la classe-------------------------------------------------------------------------------------------->
-        this.ajouterRdvModel = ajouterRdvModel;
-        this.connexion = connexion;
-        this.listeClients = listeCliens;
-        this.listeVisites = listeVisites;
-        this.connexionView = connexionView;
-        this.listeClientView = listeClientView;
-        this.listeVisitesView = listeVisitesView;
-        this.ajouterRdvView = ajouterRdvView;
+
+        this.models =models;
+        this.views = views;
+        this.listeners = listeners;
+
 
         //Inscription de la fenétre aux Observables
+        MenuListener menuListener = (MenuListener)this.listeners.get("menuListener");
+        ConnexionModel connexionModel = (ConnexionModel)this.models.get("connexion");
+
         menuListener.addObserver(this);
         connexion.addObserver(this);
         ajouterRdvModel.addObserver(this);
@@ -64,7 +65,7 @@ public class Fenetre extends JFrame implements Observer {
 
 
         //*************************Observatiton du modèle de connexion**************************************
-        if (o instanceof Connexion) {
+        if (o instanceof ConnexionModel) {
 
             //########CONNEXION -> VALIDE############
             if (connexion.getEtat()) {
@@ -96,7 +97,7 @@ public class Fenetre extends JFrame implements Observer {
                 //###########CONNEXION -> NON-VALIDE#############
             } else {
 
-                //Ajout de bordures rouges signalant une erreur d'identification
+                //Ajout de bordures signalant une erreur d'identification
                 Border border = BorderFactory.createLineBorder(Color.red);
                 connexionView.getIdField().setBorder(border);
                 connexionView.getPwdField().setBorder(border);
@@ -204,22 +205,28 @@ public class Fenetre extends JFrame implements Observer {
                         listeVisitesView.getTabPan().setViewportView(table.getTable());
 
 
+                        //CAS: "il y a des visites  de prévues."
                     } else {
 
-
+                        //Suppression de la vue actuelle
                         this.getContentPane().add(listeClientView);
 
+                        //Ajour d'un message d'erreur dans la vue
                         listeVisitesView.getTabPan().setViewportView(new JLabel("Aucunes visites de prévues pour l'instant."));
 
                     }
+
+                    //Ajout de la nouvelle vue
                     this.getContentPane().add(listeVisitesView);
+
+                    //régénération de la Fenètre
                     validate();
-                    System.out.println("menu: visites");
 
 
+                //########################AJOUTER UN RDV############################
                 } else if (arg.equals(ajouterRdvView)) {
 
-                    System.out.println("salut");
+                    //
                     ajouterRdvModel.setCommercial(this.commercial);
                     this.getContentPane().removeAll();
 

@@ -7,21 +7,16 @@ import java.sql.Time;
 
 import com.mysql.jdbc.PreparedStatement;
 
-import metier.Visite;
-import metier.Visites;
+import models.entities.Visite;
+import models.entities.Visites;
 
-public class VisitesDao {
-
-	public Db db;
+public class VisitesDao extends Dao{
 
 
-	public VisitesDao(Db db){
-
-
-		this.db = db;
-
-
+	public VisitesDao(Db db) {
+		super(db);
 	}
+
 
 	public Visites selectVisites(int zone){
 
@@ -32,7 +27,7 @@ public class VisitesDao {
 		try {
 
 			String query = "SELECT * FROM visites, utilisateurs, zones WHERE utilisateurs.codeZone =" + zone + " and visites.dateVisite > CURRENT_DATE and zones.codeZone = utilisateurs.codeZone and utilisateurs.codeClient = visites.codeClient";
-			ResultSet res = db.exec(query);
+			ResultSet res = super.getDb().exec(query);
 
 			while (res.next()){
 
@@ -78,7 +73,7 @@ public class VisitesDao {
 		try {
 
 			String query = "INSERT INTO visites VALUES ( NULL, ?, ?, ?, ?, ?, ?)";
-			PreparedStatement prepare = db.prepare(query);
+			PreparedStatement prepare = super.getDb().prepare(query);
 			prepare.setString(1, codeClient);
 			prepare.setString(2, codeCommercial);
 			prepare.setDate(3, dateVisite);

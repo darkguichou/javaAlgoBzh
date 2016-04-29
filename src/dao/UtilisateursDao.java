@@ -4,30 +4,22 @@ package dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import metier.*;
+import models.entities.Client;
+import models.entities.Clients;
+import models.entities.Commercial;
 
 
-public class UtilisateursDao {
+public class UtilisateursDao extends Dao{
 
 
-	private Db db;
-
-
-	public UtilisateursDao(Db db){
-
-
-		this.db = db;
-
-
+	public UtilisateursDao(Db db) {
+		super(db);
 	}
 
+	public Clients selectClients(int zone){
 
 
-	
-	public Utilisateurs selectClients(int zone){
-
-
-		Utilisateurs utilisateurs = new Utilisateurs();
+		Clients utilisateurs = new Clients();
 		
 		
 		try {
@@ -36,7 +28,7 @@ public class UtilisateursDao {
 					"WHERE lastVisites.codeClient = utilisateurs.codeClient AND utilisateurs.codeZone = zones.codeZone AND utilisateurs.codeZone = " + zone ;
  
 
-			ResultSet res = db.exec(query);
+			ResultSet res = super.getDb().exec(query);
 			
 			while (res.next()){
 				int id = res.getInt("idUtilisateur");
@@ -46,7 +38,7 @@ public class UtilisateursDao {
 				int codeZone = res.getInt("codeZone");
 				String numTel = res.getString("telephone");
 				String ville = res.getString("ville");
-				utilisateurs.getClients().add(new Utilisateur(id, code, email, nom, codeZone, numTel, ville));
+				utilisateurs.getClients().add(new Client(id, code, email, nom, codeZone, numTel, ville));
 				
 				
 				
@@ -77,7 +69,7 @@ public class UtilisateursDao {
 		try{
 			
 			String query = "SELECT * FROM utilisateurs WHERE commercial = 1 and codeClient = '" + code + "'"; 
-			ResultSet res = db.exec(query);
+			ResultSet res = super.getDb().exec(query);
 			
 			if (res.next()){
 				

@@ -1,15 +1,19 @@
 package gui;
 
-import controllers.AjouterRdvListener;
-import controllers.ConnexionListener;
-import controllers.MenuListener;
+import gui.views.AjouterRdvView;
+import gui.views.ConnexionView;
+import gui.views.ListeClientView;
+import gui.views.ListeVisitesView;
+import listeners.AjouterRdvListener;
+import listeners.ConnexionListener;
+import listeners.MenuListener;
 import dao.Db;
 import dao.UtilisateursDao;
 import dao.VisitesDao;
-import metier.AjouterRdvModel;
-import metier.Connexion;
-import metier.ListeClients;
-import metier.ListeVisites;
+import models.AjouterRdvModel;
+import models.ConnexionModel;
+import models.ListeClientsModel;
+import models.ListeVisitesModel;
 
 
 
@@ -30,10 +34,10 @@ public class GuiMain {
         VisitesDao visitesDao = new VisitesDao(db);
 
         //Instanciation des Modèles
-		Connexion connexion = new Connexion(utilisateursDao);
+		ConnexionModel connexion = new ConnexionModel(utilisateursDao);
         AjouterRdvModel ajouterRdvModel = new AjouterRdvModel(visitesDao);
-        ListeClients listeClients = new ListeClients();
-        ListeVisites listeVisites = new ListeVisites();
+        ListeClientsModel listeClients = new ListeClientsModel();
+        ListeVisitesModel listeVisites = new ListeVisitesModel();
         listeClients.init(utilisateursDao);
         listeVisites.init(visitesDao);
 
